@@ -1,0 +1,326 @@
+<!DOCTYPE HTML>
+<!--
+	Story by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Mahmood – Ajerli Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+		<div id="wrapper" class="divided">
+
+			<!-- Banner -->
+			<section class="banner style1 orient-left content-align-left image-position-right fullscreen onload-image-fade-in onload-content-fade-right">
+				<div class="content">
+					<h1>Mahmood – Ajerli</h1>
+					<p class="major">
+						Welcome to my portfolio! Here you will find my past and future JavaScript assignments for BIS 23.
+					</p>
+					<ul class="actions stacked">
+						<li><a href="#assignments" class="button big wide smooth-scroll-middle">View Assignments</a></li>
+					</ul>
+				</div>
+				<div class="image">
+					<img src="images/banner.jpg" alt="Banner Image" />
+				</div>
+			</section>
+
+			<!-- Assignments Section (Buttons) -->
+			<section class="wrapper style1 align-center" id="assignments">
+				<div class="inner">
+					<h2>Assignments</h2>
+					<p>Click on any assignment below to view it.</p>
+					<div id="assignments-buttons" class="assignments-buttons">
+						<!-- Assignment buttons will be inserted dynamically -->
+					</div>
+				</div>
+			</section>
+
+			<!-- Gallery for Assignments -->
+			<section class="wrapper style1 align-center" id="assignments-gallery-section">
+				<div class="inner">
+					<h2>Assignments Gallery</h2>
+					<div id="assignments-gallery" class="gallery style2 medium lightbox onscroll-fade-in">
+						<!-- Gallery items will be inserted dynamically -->
+					</div>
+				</div>
+			</section>
+
+			<!-- Assignment Form Section -->
+			<section class="wrapper style1 align-center" id="assignment-form">
+				<div class="inner">
+					<h2>Add New Assignment</h2>
+					<form method="post" action="#">
+						<div class="fields">
+							<div class="field">
+								<label for="new-assignment-name">Assignment Name</label>
+								<input type="text" id="new-assignment-name" name="assignmentName" />
+							</div>
+							<div class="field">
+								<label for="new-assignment-desc">Assignment Description</label>
+								<textarea id="new-assignment-desc" name="assignmentDesc" rows="4"></textarea>
+							</div>
+							<div class="field">
+								<label for="new-assignment-url">Assignment URL</label>
+								<input type="text" id="new-assignment-url" name="assignmentUrl" />
+							</div>
+							<div class="field">
+								<label for="new-assignment-img">Upload Assignment Image</label>
+								<input type="file" id="new-assignment-img" name="assignmentImg" accept="image/*" />
+							</div>
+							<div class="field">
+								<label for="new-assignment-password">Admin Password</label>
+								<input type="password" id="new-assignment-password" name="assignmentPassword" />
+							</div>
+						</div>
+						<ul class="actions special">
+							<li><input type="submit" value="Add Assignment" /></li>
+						</ul>
+					</form>
+				</div>
+			</section>
+
+			<!-- Delete Assignments Section -->
+			<section class="wrapper style1 align-center" id="delete-assignments-section">
+				<div class="inner">
+					<h2>Delete Assignments</h2>
+					<p>Below are the current assignments. Click the "Delete" button next to an assignment to remove it.</p>
+					<div id="delete-assignments-list">
+						<!-- Delete assignments list will be inserted dynamically -->
+					</div>
+				</div>
+			</section>
+
+			<!-- Footer -->
+			<footer class="wrapper style1 align-center">
+				<div class="inner">
+					<p>&copy; 2024 Ajerli LLC</p>
+				</div>
+			</footer>
+
+		</div>
+
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+		<!-- Custom Assignment Scripts -->
+		<script>
+			// Set admin password.
+			var ADMIN_PASSWORD = "password123";
+
+			// Assignments array with current assignments.
+			var assignments = [
+				{ 
+					name: "MPG Calculator Assignment", 
+					url: "https://molcfc.github.io/calculator/", 
+					description: "MPG Calculator assignment.", 
+					image: "http://127.0.0.1:5500/images/mpg-calculator.png" 
+				},
+				{ 
+					name: "BIS 23 Module Assignment", 
+					url: "https://molcfc.github.io/BIS23-Module2/", 
+					description: "BIS 23 Module assignment.", 
+					image: "http://127.0.0.1:5500/images/navigation-menu.webp" 
+				}
+			];
+
+			// Render assignment buttons in the "Assignments" section.
+			function renderAssignmentsButtons() {
+				var container = document.getElementById('assignments-buttons');
+				if (!container) return;
+				container.innerHTML = '';
+				assignments.forEach(function(assignment) {
+					var btn = document.createElement('a');
+					btn.href = assignment.url;
+					btn.className = "button";
+					btn.textContent = assignment.name;
+					container.appendChild(btn);
+				});
+			}
+
+			// Render the gallery items (without delete/details controls).
+			function renderAssignmentsGallery() {
+				var galleryContainer = document.getElementById('assignments-gallery');
+				if (!galleryContainer) return;
+				galleryContainer.innerHTML = '';
+				// Create inner wrapper for horizontal scrolling.
+				var innerWrapper = document.createElement('div');
+				innerWrapper.className = 'inner';
+
+				assignments.forEach(function(assignment) {
+					var article = document.createElement('article');
+
+					// Create the image link.
+					var aLink = document.createElement('a');
+					aLink.href = assignment.image && assignment.image.trim() !== ""
+						? assignment.image
+						: "assets/images/assignments/tba.jpg";
+					aLink.className = "image";
+					var img = document.createElement('img');
+					img.src = assignment.image && assignment.image.trim() !== ""
+						? assignment.image
+						: "assets/images/assignments/tba.jpg";
+					img.alt = assignment.name;
+					aLink.appendChild(img);
+					article.appendChild(aLink);
+
+					// Create caption container.
+					var captionDiv = document.createElement('div');
+					captionDiv.className = "caption";
+					var h3 = document.createElement('h3');
+					h3.textContent = assignment.name;
+					captionDiv.appendChild(h3);
+					var p = document.createElement('p');
+					p.textContent = assignment.description ? assignment.description : "TBA";
+					captionDiv.appendChild(p);
+					article.appendChild(captionDiv);
+
+					innerWrapper.appendChild(article);
+				});
+
+				galleryContainer.appendChild(innerWrapper);
+
+				// Add forward/backward navigation for non-mobile devices.
+				if (!browser.mobile) {
+					var forwardDiv = document.createElement('div');
+					forwardDiv.className = "forward";
+					var backwardDiv = document.createElement('div');
+					backwardDiv.className = "backward";
+					galleryContainer.insertBefore(backwardDiv, innerWrapper);
+					galleryContainer.appendChild(forwardDiv);
+
+					var scrollInterval;
+					function startScrolling(direction) {
+						scrollInterval = setInterval(function() {
+							innerWrapper.scrollLeft += (direction * 5);
+						}, 10);
+					}
+					function stopScrolling() {
+						clearInterval(scrollInterval);
+					}
+					forwardDiv.addEventListener('mouseenter', function() { startScrolling(1); });
+					forwardDiv.addEventListener('mouseleave', stopScrolling);
+					backwardDiv.addEventListener('mouseenter', function() { startScrolling(-1); });
+					backwardDiv.addEventListener('mouseleave', stopScrolling);
+				}
+			}
+
+			// Render the Delete Assignments Section.
+			function renderDeleteAssignments() {
+				var deleteContainer = document.getElementById('delete-assignments-list');
+				if (!deleteContainer) return;
+				deleteContainer.innerHTML = '';
+				assignments.forEach(function(assignment, index) {
+					var div = document.createElement('div');
+					div.className = "delete-assignment-item";
+					var spanName = document.createElement('span');
+					spanName.textContent = assignment.name;
+					div.appendChild(spanName);
+					var delBtn = document.createElement('button');
+					delBtn.className = "button small delete-assignment";
+					delBtn.textContent = "Delete";
+					delBtn.setAttribute("data-index", index);
+					div.appendChild(delBtn);
+					deleteContainer.appendChild(div);
+				});
+			}
+
+			// Update all displays.
+			function updateAssignmentsDisplay() {
+				renderAssignmentsButtons();
+				renderAssignmentsGallery();
+				renderDeleteAssignments();
+			}
+
+			document.addEventListener("DOMContentLoaded", updateAssignmentsDisplay);
+
+			// Add assignment form functionality.
+			function addAssignmentForm() {
+				var formContainer = document.getElementById('assignment-form');
+				if (!formContainer) return;
+				var form = formContainer.querySelector('form');
+				if (!form) return;
+				form.addEventListener('submit', function(e) {
+					e.preventDefault();
+					var nameInput = document.getElementById('new-assignment-name');
+					var descTextarea = document.getElementById('new-assignment-desc');
+					var urlInput = document.getElementById('new-assignment-url');
+					var fileInput = document.getElementById('new-assignment-img');
+					var passInput = document.getElementById('new-assignment-password');
+
+					// Validate admin password.
+					if (passInput.value.trim() !== ADMIN_PASSWORD) {
+						alert("Incorrect admin password.");
+						return;
+					}
+
+					var newAssignment = {
+						name: nameInput.value.trim() || "TBA",
+						description: descTextarea.value.trim() || "TBA",
+						url: urlInput.value.trim() || "#",
+						image: ""
+					};
+
+					// Process file upload if provided.
+					if (fileInput.files && fileInput.files[0]) {
+						var reader = new FileReader();
+						reader.onload = function(event) {
+							newAssignment.image = event.target.result;
+							assignments.push(newAssignment);
+							updateAssignmentsDisplay();
+							nameInput.value = "";
+							descTextarea.value = "";
+							urlInput.value = "";
+							fileInput.value = "";
+							passInput.value = "";
+						};
+						reader.readAsDataURL(fileInput.files[0]);
+					} else {
+						newAssignment.image = "";
+						assignments.push(newAssignment);
+						updateAssignmentsDisplay();
+						nameInput.value = "";
+						descTextarea.value = "";
+						urlInput.value = "";
+						fileInput.value = "";
+						passInput.value = "";
+					}
+				});
+			}
+
+			document.addEventListener("DOMContentLoaded", addAssignmentForm);
+
+			// Delete assignment functionality for the Delete Assignments section.
+			document.addEventListener("click", function(e) {
+				if (e.target && e.target.classList.contains("delete-assignment")) {
+					e.preventDefault();
+					var enteredPass = prompt("Enter admin password to delete this assignment:");
+					if (enteredPass === ADMIN_PASSWORD) {
+						var index = parseInt(e.target.getAttribute("data-index"), 10);
+						if (!isNaN(index)) {
+							assignments.splice(index, 1);
+							updateAssignmentsDisplay();
+						}
+					} else {
+						alert("Incorrect password. Assignment was not deleted.");
+					}
+				}
+			});
+		</script>
+
+	</body>
+</html>
