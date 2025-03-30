@@ -29,6 +29,7 @@
 					</ul>
 				</div>
 				<div class="image">
+					<!-- Using images/ folder -->
 					<img src="images/banner.jpg" alt="Banner Image" />
 				</div>
 			</section>
@@ -102,7 +103,13 @@
 			<!-- Footer -->
 			<footer class="wrapper style1 align-center">
 				<div class="inner">
-					<p>&copy; 2024 Ajerli LLC</p>
+					<ul class="icons">
+						<li><a href="#" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon brands style2 fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+						<li><a href="#" class="icon style2 fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
 				</div>
 			</footer>
 
@@ -128,17 +135,17 @@
 					name: "MPG Calculator Assignment", 
 					url: "https://molcfc.github.io/calculator/", 
 					description: "MPG Calculator assignment.", 
-					image: "http://127.0.0.1:5500/images/mpg-calculator.png" 
+					image: "images/mpg-calculator.png" 
 				},
 				{ 
 					name: "BIS 23 Module Assignment", 
 					url: "https://molcfc.github.io/BIS23-Module2/", 
 					description: "BIS 23 Module assignment.", 
-					image: "http://127.0.0.1:5500/images/navigation-menu.webp" 
+					image: "images/navigation-menu.webp" 
 				}
 			];
 
-			// Render assignment buttons in the "Assignments" section.
+			// Render assignment buttons.
 			function renderAssignmentsButtons() {
 				var container = document.getElementById('assignments-buttons');
 				if (!container) return;
@@ -152,33 +159,38 @@
 				});
 			}
 
-			// Render the gallery items (without delete/details controls).
+			// Render the gallery items.
 			function renderAssignmentsGallery() {
 				var galleryContainer = document.getElementById('assignments-gallery');
 				if (!galleryContainer) return;
 				galleryContainer.innerHTML = '';
-				// Create inner wrapper for horizontal scrolling.
+
 				var innerWrapper = document.createElement('div');
 				innerWrapper.className = 'inner';
+				// Inline styles for horizontal scrolling.
+				innerWrapper.style.display = 'flex';
+				innerWrapper.style.flexWrap = 'nowrap';
+				innerWrapper.style.overflowX = 'auto';
+				innerWrapper.style.scrollBehavior = 'smooth';
 
 				assignments.forEach(function(assignment) {
 					var article = document.createElement('article');
 
-					// Create the image link.
+					// Image link.
 					var aLink = document.createElement('a');
 					aLink.href = assignment.image && assignment.image.trim() !== ""
 						? assignment.image
-						: "assets/images/assignments/tba.jpg";
+						: "images/assignments/tba.jpg";
 					aLink.className = "image";
 					var img = document.createElement('img');
 					img.src = assignment.image && assignment.image.trim() !== ""
 						? assignment.image
-						: "assets/images/assignments/tba.jpg";
+						: "images/assignments/tba.jpg";
 					img.alt = assignment.name;
 					aLink.appendChild(img);
 					article.appendChild(aLink);
 
-					// Create caption container.
+					// Caption.
 					var captionDiv = document.createElement('div');
 					captionDiv.className = "caption";
 					var h3 = document.createElement('h3');
@@ -194,7 +206,7 @@
 
 				galleryContainer.appendChild(innerWrapper);
 
-				// Add forward/backward navigation for non-mobile devices.
+				// Forward/backward navigation (non-mobile).
 				if (!browser.mobile) {
 					var forwardDiv = document.createElement('div');
 					forwardDiv.className = "forward";
@@ -219,7 +231,7 @@
 				}
 			}
 
-			// Render the Delete Assignments Section.
+			// Render Delete Assignments Section.
 			function renderDeleteAssignments() {
 				var deleteContainer = document.getElementById('delete-assignments-list');
 				if (!deleteContainer) return;
@@ -248,7 +260,7 @@
 
 			document.addEventListener("DOMContentLoaded", updateAssignmentsDisplay);
 
-			// Add assignment form functionality.
+			// Assignment Form functionality.
 			function addAssignmentForm() {
 				var formContainer = document.getElementById('assignment-form');
 				if (!formContainer) return;
@@ -262,7 +274,6 @@
 					var fileInput = document.getElementById('new-assignment-img');
 					var passInput = document.getElementById('new-assignment-password');
 
-					// Validate admin password.
 					if (passInput.value.trim() !== ADMIN_PASSWORD) {
 						alert("Incorrect admin password.");
 						return;
@@ -275,7 +286,6 @@
 						image: ""
 					};
 
-					// Process file upload if provided.
 					if (fileInput.files && fileInput.files[0]) {
 						var reader = new FileReader();
 						reader.onload = function(event) {
@@ -304,7 +314,7 @@
 
 			document.addEventListener("DOMContentLoaded", addAssignmentForm);
 
-			// Delete assignment functionality for the Delete Assignments section.
+			// Delete assignment functionality.
 			document.addEventListener("click", function(e) {
 				if (e.target && e.target.classList.contains("delete-assignment")) {
 					e.preventDefault();
