@@ -319,7 +319,7 @@
 				if (e.target && e.target.classList.contains("delete-assignment")) {
 					e.preventDefault();
 					var enteredPass = prompt("Enter admin password to delete this assignment:");
-					if (enteredPass === ADMIN_PASSWORD) {
+if (enteredPass && enteredPass.trim() === ADMIN_PASSWORD) {
 						var index = parseInt(e.target.getAttribute("data-index"), 10);
 						if (!isNaN(index)) {
 							assignments.splice(index, 1);
