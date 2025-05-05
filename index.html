@@ -112,19 +112,38 @@
   <script>
     const ADMIN_PASSWORD = "password123";
     let assignments = JSON.parse(localStorage.getItem("assignments")) || [
-      {
-        name: "MPG Calculator Assignment",
-        url: "https://molcfc.github.io/calculator/",
-        description: "MPG Calculator assignment.",
-        image: "images/mpg-calculator.png"
-      },
-      {
-        name: "BIS 23 Module Assignment",
-        url: "https://molcfc.github.io/BIS23-Module2/",
-        description: "BIS 23 Module assignment.",
-        image: "images/navigation-menu.webp"
-      }
-    ];
+  {
+    name: "MPG Calculator Assignment",
+    url: "https://molcfc.github.io/calculator/",
+    description: "MPG Calculator assignment.",
+    image: "images/mpg-calculator.png"
+  },
+  {
+    name: "BIS 23 Module Assignment",
+    url: "https://molcfc.github.io/BIS23-Module2/",
+    description: "BIS 23 Module assignment.",
+    image: "images/navigation-menu.webp"
+  },
+  {
+    name: "Mortgage Calculator",
+    url: "https://molcfc.github.io/Mortgage-Calc/",
+    description: "Just a simple calculator for the mortgage",
+    image: "images/MortgageCalc.svg"
+  },
+  {
+    name: "Invoice Calculator Assignment",
+    url: "https://molcfc.github.io/service-invoice-calculator/",
+    description: "A calculator for creating and printing service invoices.",
+    image: "images/calculator.svg" // You can change this to any other invoice-related image
+  },
+  {
+    name: "Social News",
+    url: "https://molcfc.github.io/Social-News/",
+    description: "An interactive social link web app built with JavaScript.",
+    image: "images/social-news.jpg"
+  }
+];
+
 
     function saveAssignments() {
       localStorage.setItem("assignments", JSON.stringify(assignments));
