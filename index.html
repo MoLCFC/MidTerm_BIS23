@@ -8,110 +8,153 @@
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   <style>
-    .gallery-nav-button {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 1;
-      font-size: 2rem;
-      background: rgba(255, 255, 255, 0.85);
-      border: none;
-      cursor: pointer;
+    body.is-preload #menu nav { display: none; }
+    #menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      z-index: 9999;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding: 0.5rem 1rem;
-      transition: background 0.3s;
     }
-    .gallery-nav-button:hover { background: #ddd; }
-    .gallery-nav-button.left { left: 0; }
-    .gallery-nav-button.right { right: 0; }
-    #assignments-gallery { position: relative; }
+    #menu nav {
+      display: flex;
+      gap: 1rem;
+    }
+    #menu nav a {
+      text-decoration: none;
+      font-weight: bold;
+      color: #333;
+    }
+    .menu-toggle {
+      display: none;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      #menu nav {
+        display: none;
+        flex-direction: column;
+        background: white;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+      }
+      #menu nav.show {
+        display: flex;
+      }
+      .menu-toggle {
+        display: block;
+      }
+    }
   </style>
 </head>
 <body class="is-preload">
-  <div id="wrapper" class="divided">
-
-    <section class="banner style1 orient-left content-align-left image-position-right fullscreen">
-      <div class="content">
-        <h1>Mahmood – Ajerli</h1>
-        <p class="major">Welcome to my portfolio! Here you will find my past and future JavaScript assignments for BIS 23.</p>
-        <ul class="actions stacked">
-          <li><a href="#assignments" class="button big wide smooth-scroll-middle">View Assignments</a></li>
-        </ul>
-      </div>
-      <div class="image">
-        <model-viewer 
-          src="images/Animation_Big_Wave_Hello_withSkin.glb"
-          alt="3D Character"
-          auto-rotate
-          autoplay
-          camera-controls
-          disable-zoom
-          style="width: 100%; height: 500px; background: none;">
-        </model-viewer>
-      </div>
-    </section>
-
-    <section class="wrapper style1 align-center" id="assignments">
-      <div class="inner">
-        <h2>Assignments</h2>
-        <p>Click on any assignment below to view it.</p>
-        <div id="assignments-buttons" class="assignments-buttons"></div>
-      </div>
-    </section>
-
-    <section class="wrapper style1 align-center" id="assignments-gallery-section">
-      <div class="inner">
-        <h2>Assignments Gallery</h2>
-        <div id="assignments-gallery" class="gallery style2 medium lightbox onscroll-fade-in"></div>
-      </div>
-    </section>
-
-    <section class="wrapper style1 align-center" id="assignment-form">
-      <div class="inner">
-        <h2>Add New Assignment</h2>
-        <form method="post" action="#">
-          <div class="fields">
-            <div class="field"><label for="new-assignment-name">Assignment Name</label><input type="text" id="new-assignment-name" /></div>
-            <div class="field"><label for="new-assignment-desc">Assignment Description</label><textarea id="new-assignment-desc" rows="4"></textarea></div>
-            <div class="field"><label for="new-assignment-url">Assignment URL</label><input type="text" id="new-assignment-url" /></div>
-            <div class="field"><label for="new-assignment-img">Upload Assignment Image</label><input type="file" id="new-assignment-img" accept="image/*" /></div>
-            <div class="field"><label for="new-assignment-password">Admin Password</label><input type="password" id="new-assignment-password" /></div>
-          </div>
-          <ul class="actions special"><li><input type="submit" value="Add Assignment" /></li></ul>
-        </form>
-      </div>
-    </section>
-
-    <section class="wrapper style1 align-center" id="delete-assignments-section">
-      <div class="inner">
-        <h2>Delete Assignments</h2>
-        <div id="delete-assignments-list"></div>
-      </div>
-    </section>
-
-    <footer class="wrapper style1 align-center">
-      <div class="inner">
-        <ul class="icons">
-          <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-          <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-          <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-          <li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-          <li><a href="#" class="icon fa-envelope"><span class="label">Email</span></a></li>
-        </ul>
-      </div>
-    </footer>
-  </div>
-
-  <script src="assets/js/jquery.min.js"></script>
-  <script src="assets/js/jquery.scrollex.min.js"></script>
-  <script src="assets/js/jquery.scrolly.min.js"></script>
-  <script src="assets/js/browser.min.js"></script>
-  <script src="assets/js/breakpoints.min.js"></script>
-  <script src="assets/js/util.js"></script>
-  <script src="assets/js/main.js"></script>
+  <header id="menu">
+    <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
+    <nav>
+      <a href="#assignments">Assignments</a>
+      <a href="#assignment-form">Add Assignment</a>
+      <a href="#assignments-gallery-section">Gallery</a>
+      <a href="#delete-assignments-section">Delete Assignments</a>
+    </nav>
+  </header>
 
   <script>
-    const ADMIN_PASSWORD = "password123";
-    let assignments = JSON.parse(localStorage.getItem("assignments")) || [
+    function toggleMenu() {
+      const nav = document.querySelector('#menu nav');
+      nav.classList.toggle('show');
+    }
+  </script>
+
+<section class="banner style1 orient-left content-align-left image-position-right fullscreen">
+    <div class="content">
+      <h1>Mahmood – Ajerli</h1>
+      <p class="major">Welcome to my portfolio! Here you will find my past and future JavaScript assignments for BIS 23.</p>
+      <ul class="actions stacked">
+        <li><a href="#assignments" class="button big wide smooth-scroll-middle">View Assignments</a></li>
+      </ul>
+    </div>
+    <div class="image">
+      <model-viewer 
+        src="images/Animation_Big_Wave_Hello_withSkin.glb"
+        alt="3D Character"
+        auto-rotate
+        autoplay
+        camera-controls
+        disable-zoom
+        style="width: 100%; height: 500px; background: none;">
+      </model-viewer>
+    </div>
+  </section>
+  
+  <section class="wrapper style1 align-center" id="assignments">
+    <div class="inner">
+      <h2>Assignments</h2>
+      <p>Click on any assignment below to view it.</p>
+      <div id="assignments-buttons" class="assignments-buttons"></div>
+    </div>
+  </section>
+  
+  <section class="wrapper style1 align-center" id="assignments-gallery-section">
+    <div class="inner">
+      <h2>Assignments Gallery</h2>
+      <div id="assignments-gallery" class="gallery style2 medium lightbox onscroll-fade-in"></div>
+    </div>
+  </section>
+  
+  <section class="wrapper style1 align-center" id="assignment-form">
+    <div class="inner">
+      <h2>Add New Assignment</h2>
+      <form method="post" action="#">
+        <div class="fields">
+          <div class="field"><label for="new-assignment-name">Assignment Name</label><input type="text" id="new-assignment-name" /></div>
+          <div class="field"><label for="new-assignment-desc">Assignment Description</label><textarea id="new-assignment-desc" rows="4"></textarea></div>
+          <div class="field"><label for="new-assignment-url">Assignment URL</label><input type="text" id="new-assignment-url" /></div>
+          <div class="field"><label for="new-assignment-img">Upload Assignment Image</label><input type="file" id="new-assignment-img" accept="image/*" /></div>
+          <div class="field"><label for="new-assignment-password">Admin Password</label><input type="password" id="new-assignment-password" /></div>
+        </div>
+        <ul class="actions special"><li><input type="submit" value="Add Assignment" /></li></ul>
+      </form>
+    </div>
+  </section>
+  
+  <section class="wrapper style1 align-center" id="delete-assignments-section">
+    <div class="inner">
+      <h2>Delete Assignments</h2>
+      <div id="delete-assignments-list"></div>
+    </div>
+  </section>
+  
+  <footer class="wrapper style1 align-center">
+    <div class="inner">
+      <ul class="icons">
+        <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+        <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+        <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+        <li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+        <li><a href="#" class="icon fa-envelope"><span class="label">Email</span></a></li>
+      </ul>
+    </div>
+  </footer>
+  
+  <script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/jquery.scrolly.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+<script>
+const ADMIN_PASSWORD = "password123";
+let assignments = JSON.parse(localStorage.getItem("assignments")) || [
   {
     name: "MPG Calculator Assignment",
     url: "https://molcfc.github.io/calculator/",
@@ -128,13 +171,13 @@
     name: "Mortgage Calculator",
     url: "https://molcfc.github.io/Mortgage-Calc/",
     description: "Just a simple calculator for the mortgage",
-    image: "images/MortgageCalc.svg"
+    image: "images/calculator-svgrepo-com.svg"
   },
   {
     name: "Invoice Calculator Assignment",
     url: "https://molcfc.github.io/service-invoice-calculator/",
     description: "A calculator for creating and printing service invoices.",
-    image: "images/calculator.svg" // You can change this to any other invoice-related image
+    image: "images/calculator.svg"
   },
   {
     name: "Social News",
@@ -144,130 +187,150 @@
   }
 ];
 
+function saveAssignments() {
+  localStorage.setItem("assignments", JSON.stringify(assignments));
+}
 
-    function saveAssignments() {
-      localStorage.setItem("assignments", JSON.stringify(assignments));
-    }
+function renderAssignmentsButtons() {
+  const container = document.getElementById("assignments-buttons");
+  container.innerHTML = "";
+  assignments.forEach(a => {
+    const btn = document.createElement("a");
+    btn.href = a.url;
+    btn.className = "button";
+    btn.textContent = a.name;
+    container.appendChild(btn);
+  });
+}
 
-    function renderAssignmentsButtons() {
-      const container = document.getElementById("assignments-buttons");
-      container.innerHTML = "";
-      assignments.forEach(a => {
-        const btn = document.createElement("a");
-        btn.href = a.url;
-        btn.className = "button";
-        btn.textContent = a.name;
-        container.appendChild(btn);
-      });
-    }
+function renderAssignmentsGallery() {
+  const container = document.getElementById("assignments-gallery");
+  container.innerHTML = "";
 
-    function renderAssignmentsGallery() {
-      const container = document.getElementById("assignments-gallery");
-      container.innerHTML = "";
-      const scrollLeft = document.createElement("button");
-      scrollLeft.textContent = "◀";
-      scrollLeft.className = "gallery-nav-button left";
-      const scrollRight = document.createElement("button");
-      scrollRight.textContent = "▶";
-      scrollRight.className = "gallery-nav-button right";
-      const inner = document.createElement("div");
-      inner.className = "inner";
-      inner.style.display = "flex";
-      inner.style.overflowX = "auto";
-      inner.style.gap = "2rem";
-      inner.style.scrollBehavior = "smooth";
-      assignments.forEach(a => {
-        const article = document.createElement("article");
-        const link = document.createElement("a");
-        link.href = a.image;
-        link.className = "image";
-        const img = document.createElement("img");
-        img.src = a.image;
-        img.alt = a.name;
-        link.appendChild(img);
-        article.appendChild(link);
-        const caption = document.createElement("div");
-        caption.className = "caption";
-        caption.innerHTML = `<h3>${a.name}</h3><p>${a.description}</p>`;
-        const buttonWrapper = document.createElement("ul");
-        buttonWrapper.className = "actions";
-        const li = document.createElement("li");
-        const openBtn = document.createElement("a");
-        openBtn.href = a.url;
-        openBtn.target = "_blank";
-        openBtn.className = "button small";
-        openBtn.textContent = "Open";
-        li.appendChild(openBtn);
-        buttonWrapper.appendChild(li);
-        caption.appendChild(buttonWrapper);
-        article.appendChild(caption);
-        inner.appendChild(article);
-      });
-      scrollLeft.onclick = () => inner.scrollLeft -= 300;
-      scrollRight.onclick = () => inner.scrollLeft += 300;
-      container.appendChild(scrollLeft);
-      container.appendChild(inner);
-      container.appendChild(scrollRight);
-    }
+  const scrollLeft = document.createElement("button");
+  scrollLeft.textContent = "◀";
+  scrollLeft.className = "gallery-nav-button left";
 
-    function renderDeleteAssignments() {
-      const container = document.getElementById("delete-assignments-list");
-      container.innerHTML = "";
-      assignments.forEach((a, index) => {
-        const div = document.createElement("div");
-        div.innerHTML = `${a.name} <button class="button small" data-index="${index}">Delete</button>`;
-        container.appendChild(div);
-      });
-    }
+  const scrollRight = document.createElement("button");
+  scrollRight.textContent = "▶";
+  scrollRight.className = "gallery-nav-button right";
 
-    function updateAll() {
-      renderAssignmentsButtons();
-      renderAssignmentsGallery();
-      renderDeleteAssignments();
-    }
+  const inner = document.createElement("div");
+  inner.className = "inner";
+  inner.style.display = "flex";
+  inner.style.overflowX = "auto";
+  inner.style.gap = "2rem";
+  inner.style.scrollBehavior = "smooth";
 
-    document.addEventListener("DOMContentLoaded", () => {
+  assignments.forEach(a => {
+    const article = document.createElement("article");
+    const link = document.createElement("a");
+    link.href = a.image;
+    link.className = "image";
+
+    const img = document.createElement("img");
+    img.src = a.image;
+    img.alt = a.name;
+    link.appendChild(img);
+    article.appendChild(link);
+
+    const caption = document.createElement("div");
+    caption.className = "caption";
+    caption.innerHTML = `<h3>${a.name}</h3><p>${a.description}</p>`;
+
+    const buttonWrapper = document.createElement("ul");
+    buttonWrapper.className = "actions";
+    const li = document.createElement("li");
+    const openBtn = document.createElement("a");
+    openBtn.href = a.url;
+    openBtn.target = "_blank";
+    openBtn.className = "button small";
+    openBtn.textContent = "Open";
+    li.appendChild(openBtn);
+    buttonWrapper.appendChild(li);
+    caption.appendChild(buttonWrapper);
+
+    article.appendChild(caption);
+    inner.appendChild(article);
+  });
+
+  scrollLeft.onclick = () => inner.scrollLeft -= 300;
+  scrollRight.onclick = () => inner.scrollLeft += 300;
+
+  container.appendChild(scrollLeft);
+  container.appendChild(inner);
+  container.appendChild(scrollRight);
+}
+
+function renderDeleteAssignments() {
+  const container = document.getElementById("delete-assignments-list");
+  container.innerHTML = "";
+  assignments.forEach((a, index) => {
+    const div = document.createElement("div");
+    div.innerHTML = `${a.name} <button class="button small" data-index="${index}">Delete</button>`;
+    container.appendChild(div);
+  });
+}
+
+function updateAll() {
+  renderAssignmentsButtons();
+  renderAssignmentsGallery();
+  renderDeleteAssignments();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateAll();
+
+  document.querySelector("#assignment-form form").addEventListener("submit", e => {
+    e.preventDefault();
+    const name = document.getElementById("new-assignment-name").value.trim();
+    const desc = document.getElementById("new-assignment-desc").value.trim();
+    const url = document.getElementById("new-assignment-url").value.trim();
+    const file = document.getElementById("new-assignment-img").files[0];
+    const pass = document.getElementById("new-assignment-password").value.trim();
+
+    if (pass !== ADMIN_PASSWORD) return alert("Incorrect password.");
+    const assignment = {
+      name: name || "TBA",
+      description: desc || "TBA",
+      url: url || "#",
+      image: ""
+    };
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        assignment.image = e.target.result;
+        assignments.push(assignment);
+        saveAssignments();
+        updateAll();
+      };
+      reader.readAsDataURL(file);
+    } else {
+      assignments.push(assignment);
+      saveAssignments();
       updateAll();
-      document.querySelector("#assignment-form form").addEventListener("submit", e => {
-        e.preventDefault();
-        const name = document.getElementById("new-assignment-name").value.trim();
-        const desc = document.getElementById("new-assignment-desc").value.trim();
-        const url = document.getElementById("new-assignment-url").value.trim();
-        const file = document.getElementById("new-assignment-img").files[0];
-        const pass = document.getElementById("new-assignment-password").value.trim();
-        if (pass !== ADMIN_PASSWORD) return alert("Incorrect password.");
-        const assignment = { name: name || "TBA", description: desc || "TBA", url: url || "#", image: "" };
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            assignment.image = e.target.result;
-            assignments.push(assignment);
-            saveAssignments();
-            updateAll();
-          };
-          reader.readAsDataURL(file);
-        } else {
-          assignments.push(assignment);
-          saveAssignments();
-          updateAll();
-        }
-        e.target.reset();
-      });
+    }
 
-      document.addEventListener("click", function (e) {
-        if (e.target && e.target.tagName === "BUTTON" && e.target.textContent === "Delete") {
-          const index = parseInt(e.target.getAttribute("data-index"));
-          const pass = prompt("Enter admin password:");
-          if (pass === ADMIN_PASSWORD) {
-            assignments.splice(index, 1);
-            saveAssignments();
-            updateAll();
-          } else {
-            alert("Incorrect password.");
-          }
-        }
-      });
-    });
-  </script>
+    e.target.reset();
+  });
+
+  document.addEventListener("click", function (e) {
+    if (e.target && e.target.tagName === "BUTTON" && e.target.textContent === "Delete") {
+      const index = parseInt(e.target.getAttribute("data-index"));
+      const pass = prompt("Enter admin password:");
+      if (pass === ADMIN_PASSWORD) {
+        assignments.splice(index, 1);
+        saveAssignments();
+        updateAll();
+      } else {
+        alert("Incorrect password.");
+      }
+    }
+  });
+});
+</script>
 </body>
 </html>
+
+  
