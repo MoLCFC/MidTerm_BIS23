@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Invoice Calculator - Mahmood Ajerli</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f8f8f8;
+    }
+    nav {
+      background: #333;
+      padding: 1rem;
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 800px;
+      margin: 3rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    }
+    h1 {
+      text-align: left;
+      margin-bottom: 1.5rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    td, th {
+      padding: 0.75rem;
+      font-size: 1rem;
+    }
+    input[type="number"] {
+      width: 60px;
+      padding: 0.3rem;
+    }
+    .total {
+      text-align: right;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-top: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html">🏠 Home</a>
+    <a href="mpg-calculator.html">MPG Calculator</a>
+    <a href="mortgage-calculator.html">Mortgage</a>
+    <a href="invoice-calculator.html">Invoice</a>
+    <a href="social-news.html">Social News</a>
+  </nav>
+
+  <div class="container">
+    <h1>Service Invoice Calculator</h1>
+    <table>
+      <tbody>
+        <tr>
+          <td>1. Web Design (hours)</td>
+          <td><input type="number" value="1" min="0" onchange="calculateTotal()" class="qty" /></td>
+          <td>$<span class="rate">150</span></td>
+        </tr>
+        <tr>
+          <td>2. SEO Services (hours)</td>
+          <td><input type="number" value="1" min="0" onchange="calculateTotal()" class="qty" /></td>
+          <td>$<span class="rate">100</span></td>
+        </tr>
+        <tr>
+          <td>3. Content Writing (articles)</td>
+          <td><input type="number" value="1" min="0" onchange="calculateTotal()" class="qty" /></td>
+          <td>$<span class="rate">50</span></td>
+        </tr>
+        <tr>
+          <td>4. Digital Marketing (hours)</td>
+          <td><input type="number" value="1" min="0" onchange="calculateTotal()" class="qty" /></td>
+          <td>$<span class="rate">80</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="total" id="total">Total: $380</div>
+  </div>
+
+  <script>
+    function calculateTotal() {
+      const qtyInputs = document.querySelectorAll('.qty');
+      const rates = document.querySelectorAll('.rate');
+      let total = 0;
+
+      qtyInputs.forEach((input, i) => {
+        const qty = parseFloat(input.value) || 0;
+        const rate = parseFloat(rates[i].textContent);
+        total += qty * rate;
+      });
+
+      document.getElementById('total').textContent = `Total: $${total.toFixed(2)}`;
+    }
+
+    // Initial calc
+    window.onload = calculateTotal;
+  </script>
+
+</body>
+</html>

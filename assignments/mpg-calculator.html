@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MPG Calculator - Mahmood Ajerli</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f8f8f8;
+    }
+    nav {
+      background: #333;
+      padding: 1rem;
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 500px;
+      margin: 3rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    }
+    h1 {
+      text-align: center;
+    }
+    label, input {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    input[type="number"] {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    button {
+      padding: 0.7rem 1.2rem;
+      font-size: 1rem;
+      background: #0077cc;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-top: 1rem;
+    }
+    #result {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html">🏠 Home</a>
+    <a href="mpg-calculator.html">MPG Calculator</a>
+    <a href="mortgage-calculator.html">Mortgage</a>
+    <a href="invoice-calculator.html">Invoice</a>
+    <a href="social-news.html">Social News</a>
+  </nav>
+
+  <div class="container">
+    <h1>MPG Calculator</h1>
+    <label for="miles">Miles Driven</label>
+    <input type="number" id="miles" placeholder="Enter miles driven"/>
+
+    <label for="gallons">Gallons Used</label>
+    <input type="number" id="gallons" placeholder="Enter gallons used"/>
+
+    <button onclick="calculateMPG()">Calculate MPG</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function calculateMPG() {
+      const miles = parseFloat(document.getElementById('miles').value);
+      const gallons = parseFloat(document.getElementById('gallons').value);
+      const resultEl = document.getElementById('result');
+
+      if (isNaN(miles) || isNaN(gallons) || gallons === 0) {
+        resultEl.textContent = "Please enter valid numbers and make sure gallons is not zero.";
+        return;
+      }
+
+      const mpg = (miles / gallons).toFixed(2);
+      resultEl.textContent = `Your MPG is ${mpg}`;
+    }
+  </script>
+
+</body>
+</html>

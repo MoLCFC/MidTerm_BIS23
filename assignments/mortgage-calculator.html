@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mortgage Calculator - Mahmood Ajerli</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f8f8f8;
+    }
+    nav {
+      background: #333;
+      padding: 1rem;
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 500px;
+      margin: 3rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    }
+    h1 {
+      text-align: center;
+    }
+    label, input {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    input[type="number"] {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    button {
+      padding: 0.7rem 1.2rem;
+      font-size: 1rem;
+      background: #0077cc;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-top: 1rem;
+    }
+    #result {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html">🏠 Home</a>
+    <a href="mpg-calculator.html">MPG Calculator</a>
+    <a href="mortgage-calculator.html">Mortgage</a>
+    <a href="invoice-calculator.html">Invoice</a>
+    <a href="social-news.html">Social News</a>
+  </nav>
+
+  <div class="container">
+    <h1>Mortgage Calculator</h1>
+
+    <label for="amount">Loan Amount ($)</label>
+    <input type="number" id="amount" placeholder="Enter loan amount" />
+
+    <label for="rate">Annual Interest Rate (%)</label>
+    <input type="number" id="rate" placeholder="Enter interest rate" />
+
+    <label for="years">Loan Term (Years)</label>
+    <input type="number" id="years" placeholder="Enter loan term in years" />
+
+    <button onclick="calculateMortgage()">Calculate Payment</button>
+
+    <div id="result"></div
